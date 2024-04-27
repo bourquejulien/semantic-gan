@@ -29,6 +29,18 @@ import chainer
 from chainer import cuda
 from chainer.training import extensions
 
+class EmptyWith(object):     
+    def __enter__(self):
+        pass
+ 
+    def __exit__(self, *args):
+        pass
+
+def with_no_backprop_conditional(is_train):
+    if is_train:
+        return EmptyWith()
+    return chainer.no_backprop_mode()
+
 
 # -----------------------------------------------------------------------------
 # CV Util

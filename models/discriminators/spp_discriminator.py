@@ -4,6 +4,8 @@ import chainer
 import chainer.functions as F
 import chainer.links as L
 
+from utils import with_no_backprop_conditional
+
 
 class SPPDiscriminator(chainer.Chain):
 
@@ -37,8 +39,10 @@ class SPPDiscriminator(chainer.Chain):
         h = F.relu(self.conv4_2(h))
         h = F.spatial_pyramid_pooling_2d(h, 3, F.MaxPooling2D)
         h = F.tanh(self.fc4(h))
-        h = F.dropout(h, ratio=.5, train=self.train)
-        h = F.tanh(self.fc5(h))
-        h = F.dropout(h, ratio=.5, train=self.train)
+
+        with with_no_backprop_conditional(self.train):
+            h = F.dropout(h, ratio=.5)
+            h = F.tanh(self.fc5(h))
+            h = F.dropout(h, ratio=.5)
         h = self.fc6(h)
         return h

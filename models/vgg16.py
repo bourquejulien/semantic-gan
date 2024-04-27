@@ -2,6 +2,8 @@ import chainer
 import chainer.functions as F
 import chainer.links as L
 
+from utils import with_no_backprop_conditional
+
 
 class VGG16(chainer.Chain):
 
@@ -44,7 +46,8 @@ class VGG16(chainer.Chain):
         h = F.relu(self.conv5_2(h))
         h = F.relu(self.conv5_3(h))
         h = F.max_pooling_2d(h, 2, stride=2)
-        h = F.dropout(F.relu(self.fc6(h)), train=self.train, ratio=0.5)
-        h = F.dropout(F.relu(self.fc7(h)), train=self.train, ratio=0.5)
+        with with_no_backprop_conditional(self.train):
+            h = F.dropout(F.relu(self.fc6(h)), ratio=0.5)
+            h = F.dropout(F.relu(self.fc7(h)), ratio=0.5)
         h = self.fc8(h)
         return h

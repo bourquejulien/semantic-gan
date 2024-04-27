@@ -5,6 +5,8 @@ import chainer.functions as F
 import chainer.links as L
 import numpy as np
 
+from utils import with_no_backprop_conditional
+
 sys.path.append(os.path.split(os.path.split(os.getcwd())[0])[0])
 import functions as f
 
@@ -56,9 +58,10 @@ class FCN32s(chainer.Chain):
         h = F.relu(self.conv5_3(h))
         h = F.max_pooling_2d(h, 2, stride=2, pad=0)
         h = F.relu(self.fc6(h))
-        h = F.dropout(h, ratio=.5, train=self.train)
-        h = F.relu(self.fc7(h))
-        h = F.dropout(h, ratio=.5, train=self.train)
+        with with_no_backprop_conditional(self.train):
+            h = F.dropout(h, ratio=.5)
+            h = F.relu(self.fc7(h))
+            h = F.dropout(h, ratio=.5)
         score_fr = self.score_fr(h)
 
         upscore = self.upscore(score_fr)
