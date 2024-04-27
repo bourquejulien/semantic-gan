@@ -27,7 +27,7 @@ def parse_args(generators, discriminators, updaters):
     parser = argparse.ArgumentParser(description='Semantic Segmentation using Adversarial Networks')
     parser.add_argument('--generator', choices=generators.keys(), default='fcn16s',
                         help='Generator(segmentor) architecture')
-    parser.add_argument('--discriminator', choices=discriminators.keys(), default='largefov',
+    parser.add_argument('--discriminator', choices=discriminators.keys(), default='smallfov-light',
                         help='Discriminator architecture')
     parser.add_argument('--updater', choices=updaters.keys(), default='gan',
                         help='Updater')
