@@ -123,10 +123,10 @@ class GANUpdater(chainer.training.StandardUpdater, UpdaterMixin):
 
     def forward(self, batch):
         if self.gen.train:
-            self._forward(self, batch)
+            self._forward(batch)
         else:
             with chainer.no_backprop_mode():
-                self._forward(self, batch)
+                self._forward(batch)
         
     def calc_loss(self):
         if self.gen.train:
@@ -170,10 +170,10 @@ class NonAdversarialUpdater(chainer.training.StandardUpdater, UpdaterMixin):
 
     def forward(self, batch):
         if self.gen.train:
-            self._forward(self, batch)
+            self._forward(batch)
         else:
             with chainer.no_backprop_mode():
-                self._forward(self, batch)
+                self._forward(batch)
 
         
     def calc_loss(self):
