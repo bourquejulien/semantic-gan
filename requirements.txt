@@ -4,7 +4,7 @@
 # scipy==1.13.0
 
 numpy
-chainer==1.24.0
+chainer
 protobuf
 scipy==1.11.4
 matplotlib
