@@ -44,7 +44,7 @@ class Inferencer(object):
         x_data = np.array([datum], dtype=np.float32)
         if self.gpu >= 0:
             x_data = chainer.cuda.to_gpu(x_data, device=self.gpu)
-        x = chainer.Variable(x_data, volatile=False)
+        x = chainer.Variable(x_data)
         label = self._infer(x)
         return img, label
 
@@ -101,15 +101,15 @@ def main():
 
     dataset = PascalVOC2012Dataset('val')
 
-    infer = Inferencer(dataset, model, gpu)
-    for img_file in img_files:
-        img, label = infer.infer_image_file(img_file)
-        out_img = infer.visualize_label(img, label)
+    with chainer.no_backprop_mode():
+        infer = Inferencer(dataset, model, gpu)
+        for img_file in img_files:
+            img, label = infer.infer_image_file(img_file)
+            out_img = infer.visualize_label(img, label)
 
-        out_file = os.path.join(save_dir, os.path.basename(img_file))
-        scipy.misc.imsave(out_file, out_img)
-        print('- out_file: {0}'.format(out_file))
-
+            out_file = os.path.join(save_dir, os.path.basename(img_file))
+            scipy.misc.imsave(out_file, out_img)
+            print('- out_file: {0}'.format(out_file))
 
 if __name__ == '__main__':
     main()
