@@ -55,13 +55,12 @@ def crop_to_target(x, target):
     return x_cropped
             
 
-def global_average_pooling_2d(x, use_cudnn=True):
+def global_average_pooling_2d(x):
     """Spatial global average pooling function.
 
     Args:
         x (~chainer.Variable): Input variable.
-        use_cudnn (bool): If ``True`` and cuDNN is enabled, then this function
             uses cuDNN as the core implementation.
     """
 
-    return F.average_pooling_2d(x, ksize=(x.shape[2], x.shape[3]), use_cudnn=use_cudnn)
+    return F.average_pooling_2d(x, ksize=(x.shape[2], x.shape[3]))
