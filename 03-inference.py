@@ -76,10 +76,10 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--gpu', default=0, type=int,
                         help='if -1, use cpu only (default: 0)')
-    parser.add_argument('-s', '--segmentor', choices=segmentors.keys(), default='fcn32s',
+    parser.add_argument('-s', '--segmentor', choices=segmentors.keys(), default='fcn16s',
                         help='Segmentor arch')
     parser.add_argument('-w', '--weight',
-                        help='Pretrained model of segmentor')
+                        help='Pretrained model of segmentor', default="pretrained_model/vgg16.npz")
     parser.add_argument('--n_class', default=21, type=int,
                         help='number of classes')
     parser.add_argument('-i', '--img-files', nargs='+', required=True,

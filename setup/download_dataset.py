@@ -2,6 +2,8 @@
 
 import os, sys
 
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import chainer
 
 import utils
@@ -9,6 +11,7 @@ import utils
 def main():
     url = 'http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar'  # NOQA
     dataset_dir = chainer.dataset.get_dataset_directory('pascal')
+    print("Downloading to: ", dataset_dir)
     path = os.path.join(dataset_dir, 'VOCtrainval_11-May-2012.tar')
     utils.cached_download(
         url,

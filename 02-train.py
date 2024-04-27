@@ -17,16 +17,21 @@ from updater import GANUpdater, NonAdversarialUpdater
 from extensions import TestModeEvaluator
 import utils
 
+import torch
+
+DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(DEVICE)
+
 
 def parse_args(generators, discriminators, updaters):
     parser = argparse.ArgumentParser(description='Semantic Segmentation using Adversarial Networks')
-    parser.add_argument('--generator', choices=generators.keys(), default='fcn32s',
+    parser.add_argument('--generator', choices=generators.keys(), default='fcn16s',
                         help='Generator(segmentor) architecture')
     parser.add_argument('--discriminator', choices=discriminators.keys(), default='largefov',
                         help='Discriminator architecture')
     parser.add_argument('--updater', choices=updaters.keys(), default='gan',
                         help='Updater')
-    parser.add_argument('--initgen_path', default='pretrained_model/vgg16.npz',
+    parser.add_argument('--initgen_path', default=None,
                         help='Pretrained model of generator')
     parser.add_argument('--initdis_path', default=None,
                         help='Pretrained model of discriminator')
@@ -34,7 +39,7 @@ def parse_args(generators, discriminators, updaters):
                         help='Number of images in each mini-batch')
     parser.add_argument('--iteration', '-i', type=int, default=100000,
                         help='Number of sweeps over the dataset to train')
-    parser.add_argument('--gpu', '-g', type=int, default=-1,
+    parser.add_argument('--gpu', '-g', type=int, default=0,
                         help='GPU ID (negative value indicates CPU)')
     parser.add_argument('--out', '-o', default='snapshot',
                         help='Directory to output the result')
