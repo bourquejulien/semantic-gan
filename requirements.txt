@@ -3,9 +3,9 @@
 # protobuf==3.20
 # scipy==1.13.0
 
-numpy==1.25.2
-chainer==7.8.1
-protobuf==3.20
+numpy
+chainer==1.24.0
+protobuf
 scipy==1.11.4
 matplotlib
 
