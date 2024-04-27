@@ -5,6 +5,7 @@ import os
 import numpy as np
 import scipy.misc
 import chainer
+import imageio
 
 import utils
 
@@ -95,10 +96,10 @@ class PascalVOC2012Dataset(DatasetMixin):
         data_file = self.files[i]
         # load image
         img_file = data_file['img']
-        img = scipy.misc.imread(img_file, mode='RGB')
+        img = imageio.imread(img_file, mode='RGB')
         datum = self.img_to_datum(img)
         # load label
         label_rgb_file = data_file['label_rgb']
-        label_rgb = scipy.misc.imread(label_rgb_file, mode='RGB')
+        label_rgb = imageio.imread(label_rgb_file, mode='RGB')
         label = self.label_rgb_to_32sc1(label_rgb)
         return datum, label

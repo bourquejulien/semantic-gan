@@ -13,6 +13,8 @@ from models.generators import FCN32s, FCN16s, FCN8s
 import utils
 from dataset import PascalVOC2012Dataset
 
+import imageio
+
 
 class Inferencer(object):
 
@@ -35,7 +37,7 @@ class Inferencer(object):
     def infer_image_file(self, img_file):
         print('{0}:'.format(os.path.realpath(img_file)))
         # setup input
-        img = scipy.misc.imread(img_file, mode='RGB')
+        img = imageio.imread(img_file, mode='RGB')
         img, resizing_scale = utils.resize_img_with_max_size(img)
         print(' - resizing_scale: {0}'.format(resizing_scale))
         datum = self.dataset.img_to_datum(img.copy())
