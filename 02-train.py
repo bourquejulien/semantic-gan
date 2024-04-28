@@ -49,7 +49,7 @@ def parse_args(generators, discriminators, updaters):
                         help='Interval of evaluation')
     parser.add_argument('--snapshot_interval', type=int, default=5000,
                         help='Interval of snapshot')
-    parser.add_argument('--display_interval', type=int, default=500,
+    parser.add_argument('--display_interval', type=int, default=100,
                         help='Interval of displaying log to console')
     return parser.parse_args()
 
@@ -68,14 +68,14 @@ def make_optimizer(model, lr=1e-10, momentum=0.99):
 def main():
     generators = {
         'fcn32s': (FCN32s, VGG16, 1e-10), # (model, initmodel, learning_rate)
-        'fcn16s': (FCN16s, FCN32s, 1e-13),
+        'fcn16s': (FCN16s, FCN32s, 1e-10),
         'fcn8s': (FCN8s, FCN16s, 1e-14),
     }
     discriminators = {
         'largefov': (LargeFOV, LargeFOV, 0.1, 1.0), # (model, initmodel, learning_rate, L_bce_weight)
         'largefov-light': (LargeFOVLight, LargeFOVLight, 0.1, 1.0),
         'smallfov': (SmallFOV, SmallFOV, 0.1, 0.1),
-        'smallfov-light': (SmallFOVLight, SmallFOVLight, 0.1, 1.0),
+        'smallfov-light': (SmallFOVLight, SmallFOVLight, 0.2, 1.0),
         'sppdis': (SPPDiscriminator, SPPDiscriminator, 0.1, 1.0),
     }
     updaters = {
