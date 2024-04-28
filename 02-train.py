@@ -25,7 +25,7 @@ print(DEVICE)
 
 def parse_args(generators, discriminators, updaters):
     parser = argparse.ArgumentParser(description='Semantic Segmentation using Adversarial Networks')
-    parser.add_argument('--generator', choices=generators.keys(), default='fcn16s',
+    parser.add_argument('--generator', choices=generators.keys(), default='fcn32s',
                         help='Generator(segmentor) architecture')
     parser.add_argument('--discriminator', choices=discriminators.keys(), default='smallfov-light',
                         help='Discriminator architecture')
@@ -49,7 +49,7 @@ def parse_args(generators, discriminators, updaters):
                         help='Interval of evaluation')
     parser.add_argument('--snapshot_interval', type=int, default=5000,
                         help='Interval of snapshot')
-    parser.add_argument('--display_interval', type=int, default=100,
+    parser.add_argument('--display_interval', type=int, default=500,
                         help='Interval of displaying log to console')
     return parser.parse_args()
 
