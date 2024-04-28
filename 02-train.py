@@ -68,7 +68,7 @@ def make_optimizer(model, lr=1e-10, momentum=0.99):
 def main():
     generators = {
         'fcn32s': (FCN32s, VGG16, 1e-10), # (model, initmodel, learning_rate)
-        'fcn16s': (FCN16s, FCN32s, 1e-10),
+        'fcn16s': (FCN16s, FCN32s, 1e-14),
         'fcn8s': (FCN8s, FCN16s, 1e-14),
     }
     discriminators = {
