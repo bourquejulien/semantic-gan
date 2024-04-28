@@ -224,7 +224,6 @@ def draw_label(label, img, n_class, label_titles, bg_label=0):
     @type label_title: dict
     """
     from PIL import Image
-    from scipy.misc import fromimage
     from skimage.color import label2rgb
     from skimage.transform import resize
     colors = labelcolormap(n_class)
@@ -256,7 +255,7 @@ def draw_label(label, img, n_class, label_titles, bg_label=0):
     f = StringIO.StringIO()
     plt.savefig(f, bbox_inches='tight', pad_inches=0)
     result_img_pil = Image.open(f)
-    result_img = fromimage(result_img_pil, mode='RGB')
+    result_img = np.asarray(result_img_pil)
     result_img = resize(result_img, img.shape, preserve_range=True)
     result_img = result_img.astype(img.dtype)
     return result_img
