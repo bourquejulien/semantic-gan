@@ -47,7 +47,7 @@ def parse_args(generators, discriminators, updaters):
                         help='Resume the training from snapshot')
     parser.add_argument('--evaluate_interval', type=int, default=1000,
                         help='Interval of evaluation')
-    parser.add_argument('--snapshot_interval', type=int, default=10000,
+    parser.add_argument('--snapshot_interval', type=int, default=5000,
                         help='Interval of snapshot')
     parser.add_argument('--display_interval', type=int, default=10,
                         help='Interval of displaying log to console')
