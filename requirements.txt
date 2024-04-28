@@ -9,6 +9,8 @@ protobuf
 scipy==1.11.4
 matplotlib
 imageio
+cupy-cuda12x
+scikit-image
 
 torchvision
 torchinfo

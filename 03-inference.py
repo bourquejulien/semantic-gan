@@ -76,12 +76,12 @@ def main():
     }
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--gpu', default=0, type=int,
+    parser.add_argument('--gpu', default=-1, type=int,
                         help='if -1, use cpu only (default: 0)')
     parser.add_argument('-s', '--segmentor', choices=segmentors.keys(), default='fcn16s',
                         help='Segmentor arch')
     parser.add_argument('-w', '--weight',
-                        help='Pretrained model of segmentor', default="pretrained_model/vgg16.npz")
+                        help='Pretrained model of segmentor', default="pretrained_model/gen.npz")
     parser.add_argument('--n_class', default=21, type=int,
                         help='number of classes')
     parser.add_argument('-i', '--img-files', nargs='+', required=True,
@@ -108,7 +108,7 @@ def main():
             out_img = infer.visualize_label(img, label)
 
             out_file = os.path.join(save_dir, os.path.basename(img_file))
-            scipy.misc.imsave(out_file, out_img)
+            imageio.imwrite(out_file, out_img)
             print('- out_file: {0}'.format(out_file))
 
 if __name__ == '__main__':

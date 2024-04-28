@@ -4,10 +4,7 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-try:
-    import cStringIO as StringIO
-except:
-    from io import StringIO
+import io
 import hashlib
 import json
 import math
@@ -252,7 +249,7 @@ def draw_label(label, img, n_class, label_titles, bg_label=0):
         plt_titles.append(label_titles[label_value])
     plt.legend(plt_handlers, plt_titles, loc='lower right', framealpha=0.5)
     # convert plotted figure to np.ndarray
-    f = StringIO.StringIO()
+    f = io.BytesIO()
     plt.savefig(f, bbox_inches='tight', pad_inches=0)
     result_img_pil = Image.open(f)
     result_img = np.asarray(result_img_pil)
