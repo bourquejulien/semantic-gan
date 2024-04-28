@@ -25,7 +25,7 @@ print(DEVICE)
 
 def parse_args(generators, discriminators, updaters):
     parser = argparse.ArgumentParser(description='Semantic Segmentation using Adversarial Networks')
-    parser.add_argument('--generator', choices=generators.keys(), default='fcn32s',
+    parser.add_argument('--generator', choices=generators.keys(), default='fcn16s',
                         help='Generator(segmentor) architecture')
     parser.add_argument('--discriminator', choices=discriminators.keys(), default='smallfov-light',
                         help='Discriminator architecture')
@@ -68,14 +68,14 @@ def make_optimizer(model, lr=1e-10, momentum=0.99):
 def main():
     generators = {
         'fcn32s': (FCN32s, VGG16, 1e-10), # (model, initmodel, learning_rate)
-        'fcn16s': (FCN16s, FCN32s, 1e-12),
+        'fcn16s': (FCN16s, FCN32s, 1e-13),
         'fcn8s': (FCN8s, FCN16s, 1e-14),
     }
     discriminators = {
         'largefov': (LargeFOV, LargeFOV, 0.1, 1.0), # (model, initmodel, learning_rate, L_bce_weight)
         'largefov-light': (LargeFOVLight, LargeFOVLight, 0.1, 1.0),
         'smallfov': (SmallFOV, SmallFOV, 0.1, 0.1),
-        'smallfov-light': (SmallFOVLight, SmallFOVLight, 0.2, 1.0),
+        'smallfov-light': (SmallFOVLight, SmallFOVLight, 0.1, 1.0),
         'sppdis': (SPPDiscriminator, SPPDiscriminator, 0.1, 1.0),
     }
     updaters = {
