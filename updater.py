@@ -112,7 +112,7 @@ class GANUpdater(chainer.training.StandardUpdater, UpdaterMixin):
         x_real = self._make_dis_input(input_img, ground_truth_onehot)
         y_real = self.dis(x_real)
 
-        print("Real / Fake", ground_truth)
+        print("Real / Fake", ground_truth.sum())
 
         pred_label_map = self.gen(input_img)
         x_fake = self._make_dis_input(input_img, F.softmax(pred_label_map))
