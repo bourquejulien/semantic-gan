@@ -159,8 +159,11 @@ class CelebAMaskDataset(Dataset):
         if idx >= self.data_size:
             idx = idx % (self.data_size)
         img_idx = self.idx_list[idx]
+        label_path = os.path.join(self.label_dir, img_idx).split(".")
+        label_path[-1] = "png"
+        label_path = ".".join(label_path)
         img_pil = Image.open(os.path.join(self.img_dir, img_idx)).convert('RGB').resize((self.resolution, self.resolution))
-        mask_pil = Image.open(os.path.join(self.label_dir, img_idx)).convert('L').resize((self.resolution, self.resolution), resample=0)
+        mask_pil = Image.open(label_path).convert('L').resize((self.resolution, self.resolution), resample=0)
         
         if self.is_label:
             if (self.phase == 'train' or self.phase == 'train-val') and self.aug:
@@ -188,7 +191,11 @@ class CelebAMaskDataset(Dataset):
                 'mask': mask_tensor
             }
         else:
-            img_tensor = self.unlabel_transform(img_pil)
+            # Avoids Nontype object is not callable error
+            if self.unlabel_transform is None:
+                img_tensor = self.preprocess(img_pil)                
+            else:
+                img_tensor = self.unlabel_transform(img_pil)
             return {
                 'image': img_tensor,
             }
