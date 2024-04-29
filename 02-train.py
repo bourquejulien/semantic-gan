@@ -27,7 +27,7 @@ def parse_args(generators, discriminators, updaters):
     parser = argparse.ArgumentParser(description='Semantic Segmentation using Adversarial Networks')
     parser.add_argument('--generator', choices=generators.keys(), default='fcn16s',
                         help='Generator(segmentor) architecture')
-    parser.add_argument('--discriminator', choices=discriminators.keys(), default='smallfov-light',
+    parser.add_argument('--discriminator', choices=discriminators.keys(), default='largefov-light',
                         help='Discriminator architecture')
     parser.add_argument('--updater', choices=updaters.keys(), default='gan',
                         help='Updater')
@@ -68,7 +68,7 @@ def make_optimizer(model, lr=1e-10, momentum=0.99):
 def main():
     generators = {
         'fcn32s': (FCN32s, VGG16, 1e-10), # (model, initmodel, learning_rate)
-        'fcn16s': (FCN16s, FCN32s, 1e-14),
+        'fcn16s': (FCN16s, FCN32s, 1e-7),
         'fcn8s': (FCN8s, FCN16s, 1e-14),
     }
     discriminators = {
