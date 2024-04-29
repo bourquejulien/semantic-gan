@@ -51,7 +51,6 @@ class GANUpdater(chainer.training.StandardUpdater, UpdaterMixin):
         batchsize = self.y_fake.data.shape[0]
         loss = F.softmax_cross_entropy(self.y_real, Variable(self.xp.ones(batchsize, dtype=self.xp.int32)))
         loss += F.softmax_cross_entropy(self.y_fake, Variable(self.xp.zeros(batchsize, dtype=self.xp.int32)))
-        print("Real / Fake", self.y_real, self.y_fake)
         chainer.report({'loss': loss}, self.dis)
         return loss
 
@@ -112,6 +111,8 @@ class GANUpdater(chainer.training.StandardUpdater, UpdaterMixin):
         
         x_real = self._make_dis_input(input_img, ground_truth_onehot)
         y_real = self.dis(x_real)
+
+        print("Real / Fake", y_real, y_fake)
 
         pred_label_map = self.gen(input_img)
         x_fake = self._make_dis_input(input_img, F.softmax(pred_label_map))
