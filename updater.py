@@ -51,6 +51,7 @@ class GANUpdater(chainer.training.StandardUpdater, UpdaterMixin):
         batchsize = self.y_fake.data.shape[0]
         loss = F.softmax_cross_entropy(self.y_real, Variable(self.xp.ones(batchsize, dtype=self.xp.int32)))
         loss += F.softmax_cross_entropy(self.y_fake, Variable(self.xp.zeros(batchsize, dtype=self.xp.int32)))
+        print("Real / Fake", self.y_real, self.y_fake)
         chainer.report({'loss': loss}, self.dis)
         return loss
 
@@ -179,7 +180,6 @@ class NonAdversarialUpdater(chainer.training.StandardUpdater, UpdaterMixin):
     def calc_loss(self):
         batchsize = self.ground_truth.shape[0]
         self.loss = F.softmax_cross_entropy(self.pred_label_map, self.ground_truth, normalize=False)
-        print(self.loss)
 
         # log report
         label_true = chainer.cuda.to_cpu(self.ground_truth.data)
