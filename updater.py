@@ -179,6 +179,7 @@ class NonAdversarialUpdater(chainer.training.StandardUpdater, UpdaterMixin):
     def calc_loss(self):
         batchsize = self.ground_truth.shape[0]
         self.loss = F.softmax_cross_entropy(self.pred_label_map, self.ground_truth, normalize=False)
+        print(self.loss)
 
         # log report
         label_true = chainer.cuda.to_cpu(self.ground_truth.data)
